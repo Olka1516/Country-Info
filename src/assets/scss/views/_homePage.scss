@@ -1,0 +1,13 @@
+@mixin home-page-component {
+  .home-container {
+    padding: 38px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .home-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}

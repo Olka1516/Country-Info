@@ -1,0 +1,10 @@
+@import './components/blocks/country';
+@import './views/homePage';
+
+@mixin home-page {
+  @include home-page-component;
+}
+
+@mixin country {
+  @include country-component;
+}
