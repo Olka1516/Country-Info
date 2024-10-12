@@ -1,13 +1,21 @@
 <template>
   <div class="country">
-    <p>
-      {{ country }}
+    <p @click="showDetails">
+      {{ country.name }}
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps<{ country: string }>()
+import { ICountryProps } from '@/types'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const props = defineProps<{ country: ICountryProps }>()
+
+const showDetails = () => {
+  router.push('/country/' + props.country.countryCode)
+}
 </script>
 
 <style scoped lang="scss">

@@ -6,12 +6,8 @@
     </div>
     <div v-else class="country-empty">This country has no holiday records</div>
     <div v-if="holidays" class="country-tabs">
-      <button
-        v-for="holiday in holidaysByYears"
-        :class="{ active: setActive(holiday) }"
-        @click="chooseYear(holiday)"
-      >
-        {{ holiday.date }}
+      <button v-for="n in range" :class="{ active: setActive(n) }" @click="chooseYear(n)">
+        {{ n }}
       </button>
     </div>
   </div>
@@ -21,42 +17,50 @@
 import Holiday from '@/components/blocks/Holiday.vue'
 import { holidaysStore } from '@/store/holidays'
 import { IHoliday, IHolidayByYears } from '@/types'
-import { onMounted, Ref, ref, watch } from 'vue'
+import { onMounted, Ref, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
+const range = Array.from({ length: 11 }, (_, i) => 2020 + i)
 const route = useRoute()
 const store = holidaysStore()
-const ActiveYear = ref()
+const activeYear = ref(new Date().getFullYear())
 const holidays: Ref<IHoliday[]> = ref([])
 const holidaysByYears: Ref<IHolidayByYears[]> = ref([])
 
-const getHolidays = async () => {
-  await store.getAll(route.params.code.toString())
-  store.setHolidays(route.params.code.toString())
-  holidaysByYears.value = store.holidaysByYears
-  console.log(holidaysByYears.value)
-}
+const setActive = (year: number) => {
+  const holiday = holidaysByYears.value.find((h) => h.date === year)
+  if (!holiday || holiday.date !== activeYear.value) return false
 
-const setActive = (holiday: IHolidayByYears) => {
-  if (!holiday.active) return false
-  ActiveYear.value = holiday.date
   holidays.value = holiday.holidays
   return true
 }
 
-const chooseYear = (holiday: IHolidayByYears) => {
-  holidaysByYears.value[ActiveYear.value % 2020].active = false
-  holidaysByYears.value[holiday.date % 2020].active = true
+const chooseYear = async (year: number) => {
+  const currentActiveHoliday = holidaysByYears.value.find((h) => h.date === activeYear.value)
+  if (currentActiveHoliday) {
+    currentActiveHoliday.active = false
+  }
+
+  let holiday = holidaysByYears.value.find((h) => h.date === year)
+  activeYear.value = year
+  if (!holiday) {
+    await getHolidays()
+    holiday = holidaysByYears.value.find((h) => h.date === year)
+  }
+
+  holiday!.active = true
+  holidays.value = holiday!.holidays
 }
 
-watch(
-  () => route.params.code,
-  async () => {
-    await getHolidays()
-  }
-)
+const getHolidays = async () => {
+  await store.setHolidays(route.params.code.toString(), activeYear.value)
+  holidaysByYears.value = store.holidaysByYears
+}
 
 onMounted(async () => {
+  holidaysByYears.value = []
+  holidays.value = []
+  store.resetHolidays()
   await getHolidays()
 })
 </script>

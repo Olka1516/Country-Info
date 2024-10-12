@@ -19,7 +19,6 @@ export const countriesStore = defineStore('countriesInfo', () => {
       temp.push(data)
     }
     holidays.value = temp
-    console.log(holidays.value)
   }
 
   return { holidays, countries, getAll, getHolidays }

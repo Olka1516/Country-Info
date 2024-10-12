@@ -1,13 +1,13 @@
 <template>
   <div class="home-container">
     <div class="home-list">
-      <Search />
+      <Search v-model="searchCountry" />
       <h2>Countries List</h2>
-      <Country v-for="country in countries" :country="country.name" />
+      <Country v-for="country in countries" :country="country" />
     </div>
     <div class="home-list">
       <h2>Random countries Widget</h2>
-      <RandomCountries />
+      <RandomCountries :countries="countryNames" />
     </div>
   </div>
 </template>
@@ -17,15 +17,29 @@ import Search from '@/components/inputs/Search.vue'
 import Country from '@/components/blocks/Country.vue'
 import RandomCountries from '@/components/blocks/RandomCountries.vue'
 import { countriesStore } from '@/store'
-import { onMounted, Ref, ref } from 'vue'
+import { onMounted, Ref, ref, watch } from 'vue'
+import { ICountryProps } from '@/types'
+
+const searchCountry = ref('')
+const countryNames: Ref<string[]> = ref([])
 
 const store = countriesStore()
-const countries: Ref<{ countryCode: string; name: string }[]> = ref([])
+const countries: Ref<ICountryProps[]> = ref([])
 
 const getRandomCountries = (count: number) => {
-  const shuffled = [...countries.value].sort(() => 0.5 - Math.random())
-  return shuffled.slice(0, count).map((country) => country.countryCode)
+  const temp = [...countries.value].sort(() => 0.5 - Math.random())
+  countryNames.value = temp.slice(0, count).map((country) => country.name)
+  return temp.slice(0, count).map((country) => country.countryCode)
 }
+
+watch(
+  () => searchCountry.value,
+  () => {
+    countries.value = store.countries.filter((country) =>
+      country.name.toLowerCase().startsWith(searchCountry.value.toLowerCase())
+    )
+  }
+)
 
 onMounted(async () => {
   await store.getAll()
