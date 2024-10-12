@@ -48,3 +48,13 @@ To run the application in development mode with hot-reload:
 ```
 npm run dev
 ```
+
+## Building for Production
+To build the project for production, follow these steps:
+```
+npm run build
+```
+
+```
+npm run preview
+```
