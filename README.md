@@ -7,10 +7,10 @@ This is a Vue.js 3 project written in TypeScript, utilizing Vite as the build to
 ## Project Demo
 
 You can access a live demo of the project at the following link:
-(https://country-info-lovat.vercel.app/)
+🔗 **[Live Demo](https://country-info-lovat.vercel.app/)**
 
 ## Project Structure
-
+```bash
 ├── src
 │ ├── assets # Static assets (images, etc.)
 │ ├── components # Reusable Vue components
@@ -22,7 +22,7 @@ You can access a live demo of the project at the following link:
 ├── public # Public static files
 ├── package.json # Project dependencies and scripts
 └── vite.config.ts # Vite configuration
-
+```
 ## Getting Started
 
 Prerequisites
@@ -31,12 +31,20 @@ Make sure you have Node.js installed on your machine (Node.js >= 16.x).
 ## Installation
 
 Clone the repository:
-`git clone https://github.com/your-repo-name.git`
-`cd your-repo-name`
+```
+https://github.com/Olka1516/Country-Info.git
+```
+```
+cd Country-Info
+```
 
 Install dependencies:
-`npm install`
+```
+npm install
+```
 
 Running the Development Server
 To run the application in development mode with hot-reload:
-`npm run dev`
+```
+npm run dev
+```
