@@ -1,5 +1,7 @@
 @mixin random-countries-component {
-  .random-countries, .random-country {
+  .random-countries,
+  .random-country,
+  .holiday {
     padding: 16px;
     border: 2px solid #000;
     display: flex;

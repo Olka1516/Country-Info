@@ -1,10 +1,11 @@
 import { getAllCountries, getNextHoliday } from '@/server'
+import { ICountryProps, IHoliday } from '@/types'
 import { defineStore } from 'pinia'
 import { Ref, ref } from 'vue'
 
 export const countriesStore = defineStore('countriesInfo', () => {
-  const countries: Ref<{ countryCode: string; name: string }[]> = ref([])
-  const holidays = ref([])
+  const countries: Ref<ICountryProps[]> = ref([])
+  const holidays: Ref<IHoliday[][]> = ref([])
 
   const getAll = async () => {
     const data = await getAllCountries()
@@ -12,10 +13,12 @@ export const countriesStore = defineStore('countriesInfo', () => {
   }
 
   const getHolidays = async (codes: string[]) => {
+    let temp = []
     for (let i = 0; i < 3; i++) {
       const data = await getNextHoliday(codes[i])
-      holidays.value.push(data)
+      temp.push(data)
     }
+    holidays.value = temp
     console.log(holidays.value)
   }
 

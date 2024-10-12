@@ -1,10 +1,16 @@
 @import './components/blocks/country';
 @import './components/blocks/randomCountries';
 @import './components/blocks/randomCountry';
+@import './components/blocks/holiday';
 @import './views/homePage';
+@import './views/countryPage';
 
 @mixin home-page {
   @include home-page-component;
+}
+
+@mixin country-page {
+  @include country-page-component;
 }
 
 @mixin country {
@@ -13,6 +19,11 @@
 
 @mixin random-countries {
   @include random-countries-component;
+}
+
+@mixin holiday {
+  @include random-countries-component;
+  @include holiday-component;
 }
 
 @mixin random-country {
