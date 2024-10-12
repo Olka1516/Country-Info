@@ -1,8 +1,8 @@
 <template>
-  <div class="country">
-    <p @click="showDetails">
+  <div class="country card" @click="showDetails">
+    <b>
       {{ country.name }}
-    </p>
+    </b>
   </div>
 </template>
 

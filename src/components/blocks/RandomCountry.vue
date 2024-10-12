@@ -1,8 +1,8 @@
 <template>
   <div class="random-country" @click="showDetails">
-    <p>{{ country }}</p>
-    <p>{{ holiday }}</p>
-    <p>{{ date }}</p>
+    <p class="random-name">{{ country }}</p>
+    <b class="random-holiday">{{ holiday }}</b>
+    <p class="random-date">{{ date }}</p>
   </div>
 </template>
 

@@ -4,6 +4,7 @@
 @import './components/blocks/holiday';
 @import './views/homePage';
 @import './views/countryPage';
+@import './general/loader';
 
 @mixin home-page {
   @include home-page-component;
@@ -29,4 +30,8 @@
 @mixin random-country {
   @include random-countries-component;
   @include random-country-component;
+}
+
+@mixin loader {
+  @include loader-component;
 }

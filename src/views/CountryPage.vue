@@ -1,27 +1,44 @@
 <template>
-  <div class="country-container">
-    <h2>Country</h2>
-    <div v-if="holidays" class="country-content">
-      <Holiday v-for="holiday in holidays" :name="holiday.name" :date="holiday.date" />
-    </div>
-    <div v-else class="country-empty">This country has no holiday records</div>
-    <div v-if="holidays" class="country-tabs">
-      <button v-for="n in range" :class="{ active: setActive(n) }" @click="chooseYear(n)">
-        {{ n }}
-      </button>
+  <Loader v-if="loader" />
+  <div v-else>
+    <div class="country-container">
+      <div class="country_navs">
+        <h2>{{ store.country }}</h2>
+        <button @click="returnBack()">
+          <img src="@/assets/images/exit.svg" alt="" />
+        </button>
+      </div>
+
+      <div v-if="holidays" class="country-content">
+        <Holiday
+          v-for="holiday in holidays"
+          :name="holiday.name"
+          :date="holiday.date"
+          :types="holiday.types"
+        />
+      </div>
+      <div v-else class="country-empty">This country has no holiday records</div>
+      <div v-if="holidays" class="country-tabs">
+        <button v-for="n in range" :class="{ active: setActive(n) }" @click="chooseYear(n)">
+          {{ n }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import Loader from '@/components/general/Loader.vue'
 import Holiday from '@/components/blocks/Holiday.vue'
 import { holidaysStore } from '@/store/holidays'
 import { IHoliday, IHolidayByYears } from '@/types'
 import { onMounted, Ref, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
+const loader = ref(true)
 const range = Array.from({ length: 11 }, (_, i) => 2020 + i)
 const route = useRoute()
+const router = useRouter()
 const store = holidaysStore()
 const activeYear = ref(new Date().getFullYear())
 const holidays: Ref<IHoliday[]> = ref([])
@@ -57,11 +74,17 @@ const getHolidays = async () => {
   holidaysByYears.value = store.holidaysByYears
 }
 
+const returnBack = () => {
+  router.push('/')
+}
+
 onMounted(async () => {
   holidaysByYears.value = []
   holidays.value = []
   store.resetHolidays()
   await getHolidays()
+  await store.setCountry(holidaysByYears.value[0].holidays[0].countryCode)
+  loader.value = false
 })
 </script>
 

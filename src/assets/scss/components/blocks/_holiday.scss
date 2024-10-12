@@ -2,4 +2,31 @@
   .holiday {
     width: 50%;
   }
+
+  span {
+    padding-right: 8px;
+  }
+  
+  .holiday-date {
+    color: #989898;
+    font-size: 14px;
+  }
+
+  .holiday-name {
+    font-size: 20px;
+  }
+
+  .holiday-tags {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .holiday-tag {
+    color: white;
+    background-color: #191919;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
 }
