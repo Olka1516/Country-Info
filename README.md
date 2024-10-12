@@ -32,10 +32,10 @@ Make sure you have Node.js installed on your machine (Node.js >= 16.x).
 
 Clone the repository:
 ```
-git clone https://github.com/your-repo-name.git
+https://github.com/Olka1516/Country-Info.git
 ```
 ```
-cd your-repo-name
+cd Country-Info
 ```
 
 Install dependencies:
