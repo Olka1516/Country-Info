@@ -1,4 +1,6 @@
 @import './components/blocks/country';
+@import './components/blocks/randomCountries';
+@import './components/blocks/randomCountry';
 @import './views/homePage';
 
 @mixin home-page {
@@ -7,4 +9,13 @@
 
 @mixin country {
   @include country-component;
+}
+
+@mixin random-countries {
+  @include random-countries-component;
+}
+
+@mixin random-country {
+  @include random-countries-component;
+  @include random-country-component;
 }
