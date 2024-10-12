@@ -3,10 +3,10 @@
   <div v-else>
     <div class="country-container">
       <div class="country_navs">
-        <h2>{{ store.country }}</h2>
         <button @click="returnBack()">
           <img src="@/assets/images/exit.svg" alt="" />
         </button>
+        <h2>{{ store.country }}</h2>
       </div>
 
       <div v-if="holidays" class="country-content">
